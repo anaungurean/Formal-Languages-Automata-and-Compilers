@@ -26,6 +26,7 @@ digit [0-9]
 "&&" return AND;
 "||" return OR;
 "^" return XOR;
+"**" return FINALSEQ;
 
 "if" return IF;
 "else" return ELSE;
@@ -43,6 +44,8 @@ digit [0-9]
 ")" return CP;
 "{" return OB;
 "}" return CB;
+["].*["] return STR; 
+['].[']  return CHAR; 
 . ;
 [ \n] ;
 %%
