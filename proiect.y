@@ -19,7 +19,7 @@ program
 	: declarations function {printf("Input accepted\n");exit(0);}
 	;
 declarations 
-	: type variables SEMICOLON
+	: type variables FINALSEQ
 	| 
 	;
 type 
@@ -40,13 +40,20 @@ argumentlist
 	: variables
 	;
 statements
-	: expressions SEMICOLON
+	: expressions FINALSEQ
 	;
 expressions
 	: IDENTIFIER ASSIGN expressions
 	| IDENTIFIER
 	| NUM
 	;
+body: FOR '(' statement ':' condition ':' statement ')' '{' body '}'
+| IF '(' condition ')' '{' body '}' ELSE
+| statement '**' 
+| body body
+| PRINTFF '(' STR ')' '**'
+| SCANFF '(' STR ',' '&' IDENTIFIER ')' '**'
+;
 %%
 
 #include "lex.yy.c"
@@ -57,6 +64,3 @@ int main()
 	fclose(yyin);
 	return 0;
 }
-
-
-
