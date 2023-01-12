@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "temafinal.h"
+#include "functions.h"
 
 extern FILE* yyin;
 extern char* yytext;
