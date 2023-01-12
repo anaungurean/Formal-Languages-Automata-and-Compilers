@@ -1,0 +1,57 @@
+*Global_Variables
+{
+int a;
+int myInteger1;
+int myInteger2;
+int myConstInteger := 777;
+
+string myString := "cool string";
+string your_string := "lame string...";
+
+char myChar := 'A';
+
+bool myBool := false;
+
+float myFloat := 1.;
+
+int myMatrix[10][10];
+}
+
+*Functions
+{
+bool SimpleBoolFunc() {
+        return true;
+    }
+
+int SimpleIntFunc(int x) {
+        int a = 10;
+        int b := 20;
+
+        return 10;
+    }
+
+float AdvancedFloatFunc(float f1, float f2, string method) {
+        float returnValue;
+
+        return returnValue;
+    }
+}
+
+*Predefined_DataTypes
+{
+^define x 10;
+}
+
+*Main
+{
+bool simpleBool := SimpleBoolFunc();
+myConstInteger := 1;
+SimpleIntFunc(20);
+
+int i;
+int abc;
+
+for (i := 0 ; i<10, i := i+1) {
+        abc := abc + 1;
+}
+}
