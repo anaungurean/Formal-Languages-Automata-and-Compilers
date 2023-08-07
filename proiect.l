@@ -1,62 +1,62 @@
 %{
 #include <stdio.h>
-#include <string.h>
 #include "y.tab.h"
-
 %}
-
+%option noyywrap
 %%
+
+"/*"(.|\n|\r)+"*/" ;
+
+#[A-Za-z][A-Za-z0-9]* {yylval.strVal = strdup(yytext);return IDENTIFIER;}
+0|[1-9][0-9]*|[+-][1-9][0-9]* {yylval.intVal = atoi(yytext);return NR;}
+[ \t] ;
+
 "*Global_Variables" {return GLOBAL_VAR;}
 "*Functions" {return FUN;}
 "*Predefined_DataTypes" {return PREDEF;}
 "*Main" {return MAIN;}
 
-"int"|"float"|"char"|"string"|"bool" {yylval.strval = strdup(yytext); return TYPE;}
-"matrix" {return MATRIX;}
+"function" {return FUNC;}
+"class" {return CLASA;}
 "^define" {return DEFINE;}
-"class" {yylval.strval = strdup(yytext); return CLASS;}
 
-[a-zA-Z_][a-zA-Z0-9_]* {yylval.strval = strdup(yytext); return IDENTIFIER;}
-"const" {return CONST;}
+":==" {return DEQ;}
+":!=" {return DIF;}
+":<=" {return LEQ;}
+":>=" {return GEQ;}
+":<" {return LE;}
+":>" {return GE;}
 
-"if" {yylval.string = strdup(yytext); return IF;}
-"else" {yylval.string = strdup(yytext); return ELSE;}
-"for" {yylval.string = strdup(yytext); return FOR;};
-"for" {yylval.string = strdup(yytext); return FOR;};
-"while" {yylval.string = strdup(yytext); return WHILE;};
-
-
-"{" {return BLOCK_BEGIN;}
-"}" {return BLOCK_END;}
-"(" {return TUPLE_BEGIN;}
-")" {return TUPLE_END;}
-"[" {return MAT_BEGIN;}
-"]" {return MAT_END;}
-";" {return INSTR_END;}
-"," {return COMMA_SEP;}
-":=" {yylval.character = yytext[0]; return ASSIGN;}
-
-":+" {return ADD;}
-":-" {return SUB;}
-":*" {return MUL;}
+":=" {return EQ;}
+":+" {return PLUS;}
+":-" {return MINUS;}
 ":/" {return DIV;}
-":%" {return MOD;}
-":=="|":<"|":>"|":<="|":>=" {yylval.string = strdup(yytext); return LOGICAL_OPERATOR;}
-"or" {yylval.string = strdup(yytext); return OR;}
-"and" {yylval.string = strdup(yytext); return AND;}
-"not" {yylval.string = strdup(yytext); return NOT;}
+":*" {return MUL;}
 
-[0-9]|[1-9][0-9]+ {yylval.natval = atoi(yytext); return NATURAL;}
--[1-9][0-9]* {yylval.intval = atoi(yytext); return INTEGER;}
-(0|[1-9][0-9]*)"."([0-9]*) {yylval.floatval = atof(yytext); return FLOAT;}
-\'[0-9a-zA-Z_=+\[\]{};':",./<>?-]\' {yylval.character = yytext[1]; return CHAR;}
-\"[0-9a-zA-Z_=+\[\]{};':",./<>?-]*\" {yylval.string = strdup(yytext); return STRING;}
-"true"|"false" {if(strcmp(yytext, "true") == 0) yylval.intval = 1; else yylval.intval = 0; return BOOL;}
- 
+"and" {return AND;}
+"or" {return OR;}
 
+"Eval" {return EVAL;}
+"int"       {yylval.dataType = strdup(yytext);return INT;} 
+"char"        {yylval.dataType = strdup(yytext);return CHAR;}
+"float"       {yylval.dataType = strdup(yytext);return FLOAT;}
+"string"          {yylval.dataType = strdup(yytext);return STRING;}
+"void"      {yylval.dataType = strdup(yytext);return VOID;}  
+"bool"       {yylval.dataType = strdup(yytext);return BOOL;}
+"matrix"                 {yylval.dataType = strdup(yytext);return MATRIX;}
+"object"                  {yylval.dataType = strdup(yytext);return OBJ;}
+"{{"   {return BEG;}
+"}}"   {return END;}
+"return" {return RETURN;}
+"true"  {return TRUE;}
+"false"   {return FALSE;}
+"while" {return WHILE;}
+"for" {return FOR;}
+"if" {return IF;}
+"else" {return ELSE;}
+\'.\' {return CHARVAL;}
+\"[^\"]+\" {return STRINGVAL;}
 
-[\s\t\r] {}
-\n {}
-. {}
-
+\n {yylineno++;}
+. {return yytext[0];}
 %%
